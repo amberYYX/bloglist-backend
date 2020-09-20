@@ -1,0 +1,24 @@
+[
+  {
+    id: 1,
+    title: 'good good study, day day up',
+    author: 'number one',
+    url: 'https://fullstackopen.com/en/part3/node_js_and_express',
+    likes: 4
+  },
+  {
+    id: 2,
+    title: 'eslint sometimes does not work',
+    author: 'lint',
+    url: 'https://eslint.org/',
+    likes: 2
+  },
+  {
+    id: 3,
+    title: 'upwards and onwards',
+    author: 'no ides',
+    url: 'https://www.google.com/',
+    likes: 5
+  }
+
+]

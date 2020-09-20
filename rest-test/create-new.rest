@@ -1,0 +1,10 @@
+POST http://localhost:8888/api/blogs/
+Content-Type: application/json
+
+{
+    "id": 1,
+    "title": "good good study, day day up",
+    "author": "number one",
+    "url": "https://fullstackopen.com/en/part3/node_js_and_express",
+    "likes": 1
+}
