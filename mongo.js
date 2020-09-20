@@ -15,7 +15,6 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFind
 
 const blogSchema = new mongoose.Schema(
   {
-    id: Number,
     title: String,
     author: String,
     url: String,
@@ -51,10 +50,10 @@ const Blog = mongoose.model('Blog', blogSchema)
 // })
 
 // // 返回所有。 {}里面可以添加搜索条件
-Blog.find({}).then(result => {
-  result.forEach(note => {
-    console.log(note)
-  })
-  mongoose.connection.close()
-})
+// Blog.find({}).then(result => {
+//   result.forEach(note => {
+//     console.log(note)
+//   })
+//   mongoose.connection.close()
+// })
 

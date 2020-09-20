@@ -1,35 +1,48 @@
 // const http = require('http') // -> Node's built-in web server module
 const express = require('express')
 const app = express() //simplyfy coding
+app.use(express.json()) //for POST method
+
+const mongoose = require('mongoose')
 require('dotenv').config()
 const url = process.env.MONGODB_URI
 
-app.use(express.json()) //for POST method
+const Blog = require('./models/blog')
+
+mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
+  .then(result => {
+    console.log('connected to MongoDB')
+  })
+  .catch(error => {
+    console.log('error connecting to MonDB', error.mongoose)
+  })
+
+
 
 //Hardcore data
-let blogs = [
-  {
-    id: 1,
-    title: 'good good study, day day up',
-    author: 'number one',
-    url: 'https://fullstackopen.com/en/part3/node_js_and_express',
-    likes: 4
-  },
-  {
-    id: 2,
-    title: 'eslint sometimes does not work',
-    author: 'lint',
-    url: 'https://eslint.org/',
-    likes: 2
-  },
-  {
-    id: 3,
-    title: 'upwards and onwards',
-    author: 'no ides',
-    url: 'https://www.google.com/',
-    likes: 5
-  }
-]
+// let blogs = [
+//   {
+//     id: 1,
+//     title: 'good good study, day day up',
+//     author: 'number one',
+//     url: 'https://fullstackopen.com/en/part3/node_js_and_express',
+//     likes: 4
+//   },
+//   {
+//     id: 2,
+//     title: 'eslint sometimes does not work',
+//     author: 'lint',
+//     url: 'https://eslint.org/',
+//     likes: 2
+//   },
+//   {
+//     id: 3,
+//     title: 'upwards and onwards',
+//     author: 'no ides',
+//     url: 'https://www.google.com/',
+//     likes: 5
+//   }
+// ]
 
 const requestLogger = (request, response, next) => {
   console.log('Method:', request.method)
@@ -41,36 +54,45 @@ const requestLogger = (request, response, next) => {
 
 app.use(requestLogger)
 
-app.get('/', (req, res) => {
-  res.send('<h1>hello</h11>')
-})
+// app.get('/', (req, res) => {
+//   res.send('<h1>hello</h11>')
+// })
 
 app.get('/api/blogs',(req, res) => {
-  res.json(blogs)
+  Blog.find({}).then(blogs => {
+    res.json(blogs)
+    console.log(blogs)
+  })
 })
 
 app.get('/api/blogs/:id', (req, res) => {
   const id = Number(req.params.id)
-  const blog = blogs.find(blog => blog.id === id)
-  if(blog){
+  Blog.findOneAndRemove(id).then(blog => {
     res.json(blog)
-  } else {
-    res.status(404).end()
-  }
+  })
 })
 
-app.delete('/api/blogs/:id', (req, res) => {
-  const id = Number(req.params.id)
-  blogs = blogs.filter( blog => blog.id !== id)
-
-  res.status(204).end()
+app.delete('/api/blogs/:id', (req, res, next) => {
+  Blog.findOneAndRemove(req.params.id)
+    .then(result => {
+      res.status(204).end()
+    })
+    .catch(error => next(error))
 })
 
 app.post('/api/blogs', (req, res) => {
-  const blog = req.body
-  blogs = blogs.concat(blog)
+  const body = req.body
 
-  res.json(blog)
+  const newBlog = new Blog({
+    title: body.title,
+    author: body.author,
+    url: body.url,
+    likes: body.likes
+  })
+
+  newBlog.save().then(savedBlog => {
+    res.json(savedBlog)
+  })
 })
 
 const unkownEndpoint = (req, res) => {
