@@ -35,19 +35,18 @@ const Blog = mongoose.model('Blog', blogSchema)
 // module.exports = mongoose.model('Item', ItemSchema)
 
 //for test
-// const blog = new Blog({
-//   id: 456,
-//   title: 'Str---ing',
-//   author: 'Stvhgfnring',
-//   url: 'Sdgagatring',
-//   likes: 55
+const blog = new Blog({
+  title: 'String',
+  author: 'Sting',
+  url: 'String',
+  likes: 0
 
-// })
+})
 
-// blog.save().then(result => {
-//   console.log('note saved!')
-//   mongoose.connection.close()
-// })
+blog.save().then(result => {
+  console.log('note saved!')
+  mongoose.connection.close()
+})
 
 // // 返回所有。 {}里面可以添加搜索条件
 // Blog.find({}).then(result => {
