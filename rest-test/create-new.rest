@@ -2,7 +2,7 @@ POST http://localhost:8888/api/blogs/
 Content-Type: application/json
 
 {
-    "title": "another good good study, day day up",
+    "title": "1another good good study, day day up",
     "author": "number two",
     "url": "https://fullstackopen.com/en/part3/node_js_and_express",
     "likes": 1
