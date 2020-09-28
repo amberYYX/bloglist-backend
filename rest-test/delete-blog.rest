@@ -1,1 +1,2 @@
-DELETE http://localhost:8888/api/blogs/5f6b9c754b4f97bb487f7324
+DELETE http://localhost:8888/api/blogs/5f7233fcf1c12324ae4481e0
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtMDAxIiwiaWQiOiI1ZjcyMjQxMmUzMWU2MDFlZmY4MWIzZGEiLCJpYXQiOjE2MDEzMTY0MTh9.uIu2-AppNcn3wJitHYu0Yeywtq8S-Ol8tTKAyJ1if4k
