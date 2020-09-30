@@ -1,10 +1,10 @@
 POST http://localhost:8888/api/blogs/
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtMDAxIiwiaWQiOiI1ZjcyMjQxMmUzMWU2MDFlZmY4MWIzZGEiLCJpYXQiOjE2MDEzMTU5MjF9.4SJJBNxeYY54N_lLq7TNB9yQutQ0Zgo1GIFfPPc35ZY
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3QtMDAxIiwiaWQiOiI1ZjcyMjQxMmUzMWU2MDFlZmY4MWIzZGEiLCJpYXQiOjE2MDEzMTY0MTh9.uIu2-AppNcn3wJitHYu0Yeywtq8S-Ol8tTKAyJ1if4k
 
 {
     "title": "001-1 another good good study, day day up",
     "author": "number two",
     "url": "https://fullstackopen.com/en/part3/node_js_and_express",
-    "likes": 12
+    "likes": 10
 }
