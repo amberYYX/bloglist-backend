@@ -17,12 +17,12 @@ userRouter.get('/', async(request, response) => {
 })
 
 userRouter.get('/:id', async(request, response) => {
-  // const users = await User.find({})
+  const users = await User.find({})
 
 
 
-  const users = await User
-    .findById(request.params.id).populate('blogs')
+  // const users = await User
+  //   .findById(request.params.id).populate('blogs')
 
 
   /* this one returns users' info and required blogs content*/

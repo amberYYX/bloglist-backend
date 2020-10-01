@@ -4,17 +4,15 @@ const User = require('../models/user')
 const jwt = require('jsonwebtoken')
 
 blogRouter.get('/',async(req, res) => {
-  const blogs = await Blog.find({})
+  const blogs = await Blog.find({}).populate('user')
   res.json(blogs)
 })
+//---------------------------------------------------
 
 blogRouter.get('/:id', async(req, res) => {
   const aimBlog = await Blog.findById(req.params.id)
   res.json(aimBlog)
 })
-
-
-
 
 //blog attached to user
 //---------------------------------------------------
@@ -27,7 +25,6 @@ const getTokenFrom = request => {
   return null
 }
 //---------------------------------------------------
-
 
 
 blogRouter.post('/', async(req, res) => {
@@ -61,7 +58,7 @@ blogRouter.post('/', async(req, res) => {
   res.json(savedNewBlog)
 })
 
-
+//---------------------------------------------------
 blogRouter.delete('/:id', async(req, res) => {
 
   const token = getTokenFrom(req)
@@ -86,7 +83,16 @@ blogRouter.delete('/:id', async(req, res) => {
     await Blog.findOneAndRemove(req.params.id)
     res.status(204).end()
   }
+})
 
+//---------------------------------------------------
+blogRouter.put('/:id', async(req, res) => {
+  const body = req.body
+  console.log(body)
+  const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body )
+  console.log(updatedBlog)
+
+  res.json(updatedBlog)
 })
 
 
