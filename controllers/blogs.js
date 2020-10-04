@@ -30,8 +30,6 @@ const getTokenFrom = request => {
 blogRouter.post('/', async(req, res) => {
   const body = req.body
 
-  // const user = await User.findOne(body.userId)
-
   const token = getTokenFrom(req)
   const decodedToken = jwt.verify(token, process.env.SECRET)
   // const decodedToken = jwt.verify(req.token, process.env.SECRET)
@@ -46,7 +44,7 @@ blogRouter.post('/', async(req, res) => {
     title: body.title,
     author: body.author,
     url: body.url,
-    likes: body.likes,
+    likes: 0,
     user: user._id
   })
 
@@ -55,7 +53,10 @@ blogRouter.post('/', async(req, res) => {
   user.blogs = user.blogs.concat(savedNewBlog._id)
   await user.save()
 
-  res.json(savedNewBlog)
+  const newBlogs = await Blog.find({}).populate('user')
+
+  // res.json(savedNewBlog)
+  res.json(newBlogs)
 })
 
 //---------------------------------------------------
@@ -80,16 +81,38 @@ blogRouter.delete('/:id', async(req, res) => {
     user.blogs = user.blogs.filter(b => b.toString() !== req.params.id)
     await user.save()
 
-    await Blog.findOneAndRemove(req.params.id)
+    await Blog.findByIdAndRemove(req.params.id)
     res.status(204).end()
   }
 })
 
 //---------------------------------------------------
 blogRouter.put('/:id', async(req, res) => {
+  // const body = req.body
+
+  // const token = getTokenFrom(req)
+  // const decodedToken = jwt.verify(token, process.env.SECRET)
+
+  // if (!token || !decodedToken.id) {
+  //   return res.status(401).json({ error: 'token missing or invalid' })
+  // }
+
+  // const user = await User.findById(decodedToken.id)
+
+  // if (user !== null) {
+  //   const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body )
+  //   console.log(updatedBlog)
+
+  //   res.json(updatedBlog)
+  // }else {
+  //   return res.status(401).json({ error: 'user not find' })
+  // }
+
   const body = req.body
-  console.log(body)
-  const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body )
+
+  // mongoose.set( new: true  )
+
+  const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body, { new: true } )
   console.log(updatedBlog)
 
   res.json(updatedBlog)
