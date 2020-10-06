@@ -72,11 +72,8 @@ blogRouter.delete('/:id', async(req, res) => {
   const blog = await Blog.findById(req.params.id)
   const user = await User.findById(decodedToken.id)
 
-  console.log(`user id in blog. -- ${blog.user}`)
-  console.log(`user id in user. -- ${user._id}`)
 
   if ( blog.user.toString() === user._id.toString() ){
-    console.log('identification check')
 
     user.blogs = user.blogs.filter(b => b.toString() !== req.params.id)
     await user.save()
@@ -113,9 +110,12 @@ blogRouter.put('/:id', async(req, res) => {
   // mongoose.set( new: true  )
 
   const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, body, { new: true } )
-  console.log(updatedBlog)
 
-  res.json(updatedBlog)
+  const updatedBlogMoreInfo = await Blog.findById(req.params.id).populate('user')
+  // const updatedBlogMoreInfo = updatedBlog.populate('user')
+  console.log(`with info ${updatedBlogMoreInfo}`)
+
+  res.json(updatedBlogMoreInfo)
 })
 
 
